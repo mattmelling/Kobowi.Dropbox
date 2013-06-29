@@ -1,23 +1,12 @@
-﻿@{
+﻿@model Kobowi.Dropbox.ViewModels.DropboxStorageViewModel
+@{
     Script.Require("jQuery");
     
     Script.Include("knockout-2.2.1.js");
     Script.Include("jquery.fancybox.pack.js");
     
     Style.Include("dropbox.storage.css");
-    Style.Include("fancybox/jquery.fancybox.css");
-    
-    var client = WorkContext.Resolve<Kobowi.Dropbox.Services.IDropboxService>().GetClient(WorkContext.CurrentUser);
-    var raw = Json.Encode(client.GetMetaData("").Contents.Select(i => new {
-        name = i.Name,
-        isFolder = i.Is_Dir,
-        icon = i.Icon,
-        size = i.Size,
-        extension = i.Extension,
-        modified = i.Modified,
-        hasThumb = i.Thumb_Exists
-    }));
-                                
+    Style.Include("fancybox/jquery.fancybox.css");                               
 }
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -68,7 +57,7 @@
                     <a class="button" data-bind="visible: selected().hasThumb" id="thumb-preview">@T("Preview")</a>
                 </span>
             </div>
-            <input type="hidden" name="Id" value="@Model"/>
+            <input type="hidden" name="Id" value="@Model.Id"/>
             <input type="hidden" name="ThumbUrl" value="@Url.Action("Thumb")"/>
             <input type="hidden" name="ListUrl" value="@Url.Action("List")"/>
             <input type="hidden" name="PreviewUrl" value="@Url.Action("Preview")"/>
@@ -207,7 +196,7 @@
                     var model = new DropboxViewModel();
                     ko.applyBindings(model);
 
-                    model.pushobj('/', @Html.Raw(raw));
+                    model.pushobj('/', @Html.Raw(Json.Encode(Model.Contents)));
                 });
             </script>
         }

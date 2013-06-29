@@ -1,6 +1,7 @@
 ﻿@model Kobowi.Dropbox.ViewModels.DropboxAuthoriseViewModel
 @{
     Script.Require("jQuery");
+    Style.Include("dropbox.storage.css");
 }
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -11,7 +12,7 @@
         @Display.StyleSheetLinks()
     </head>
     <body>
-        <a class="button" id="authenticate" target="_blank" href="@Model.AuthoriseUrl">@T("Authenticate with Dropbox")</a>
+        <a class="button" id="authenticate" href="@Model.AuthoriseUrl">@T("Log in to Dropbox")</a>
         
         @using (Script.Foot()) {
             <script type="text/javascript">

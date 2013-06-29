@@ -179,6 +179,7 @@
     <Compile Include="Controllers\DropboxStorageController.cs" />
     <Compile Include="Drivers\DropboxSettingsPartDriver.cs" />
     <Compile Include="Drivers\DropboxUserSettingsPartDriver.cs" />
+    <Compile Include="Extensions\DropnetExtensions.cs" />
     <Compile Include="Handlers\DropboxSettingsPartHandler.cs" />
     <Compile Include="Handlers\DropboxUserSettingsPartHandler.cs" />
     <Compile Include="Migrations.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Services\DropboxService.cs" />
     <Compile Include="Services\IDropboxService.cs" />
     <Compile Include="ViewModels\DropboxAuthoriseViewModel.cs" />
+    <Compile Include="ViewModels\DropboxStorageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DropboxAuthentication\Authorise.cshtml" />
@@ -210,6 +212,12 @@
     <Content Include="Styles\images\dropbox\16x16\Thumbs.db" />
     <Content Include="Styles\images\dropbox\48x48\Thumbs.db" />
     <Content Include="Styles\images\dropbox\README" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DropboxStorage\Index_SetupApi.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DropboxAuthentication\Index_SetupApi.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

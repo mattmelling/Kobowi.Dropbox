@@ -1,0 +1,15 @@
+﻿@{
+    Style.Include("dropbox.storage.css");
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        @Display.Metas()
+        @Display.HeadScripts()
+        @Display.HeadLinks()
+        @Display.StyleSheetLinks()
+    </head>
+    <body>
+        <p>@T("Can't contact Dropbox. Have you entered your <a href=\"https://www.dropbox.com/developers/apps\" target=\"_blank\">API Keys</a> on the Site Settings page?")</p>
+    </body>
+</html>

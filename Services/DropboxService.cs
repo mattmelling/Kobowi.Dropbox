@@ -16,6 +16,8 @@ namespace Kobowi.Dropbox.Services {
             if (_orchard.WorkContext.CurrentUser == null)
                 return null;
             var settings = _orchard.WorkContext.CurrentSite.As<DropboxSettingsPart>();
+            if (string.IsNullOrEmpty(settings.ApiKey) || string.IsNullOrEmpty(settings.ApiSecret))
+                return null;
             return new DropNetClient(settings.ApiKey, settings.ApiSecret);
         }
 

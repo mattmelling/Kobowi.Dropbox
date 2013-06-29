@@ -99,23 +99,15 @@
         }
 
             #dropbox-properties .properties .property .propname {
+                display: block;
                 font-weight: bold;
                 margin-right: 6px;
+                clear: both;
             }
 
             #dropbox-properties .properties .property .propvalue {
 
             }
-
-.dropbox-item .icon {
-    display: block;
-    padding-left: 22px;
-    background-position: left center;
-    background-repeat: no-repeat;
-    margin: 5px;
-    text-decoration: none;
-    min-height: 20px;
-}
 
 /* Stolen from TheAdmin.... */
 .message-Information, .notifications {
