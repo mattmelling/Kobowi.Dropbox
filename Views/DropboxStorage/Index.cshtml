@@ -1,0 +1,206 @@
+﻿@{
+    Script.Require("jQuery");
+    
+    Script.Include("knockout-2.2.1.js");
+    Script.Include("jquery.fancybox.pack.js");
+    
+    Style.Include("dropbox.storage.css");
+    Style.Include("fancybox/jquery.fancybox.css");
+    
+    var client = WorkContext.Resolve<Kobowi.Dropbox.Services.IDropboxService>().GetClient(WorkContext.CurrentUser);
+    var raw = Json.Encode(client.GetMetaData("").Contents.Select(i => new {
+        name = i.Name,
+        isFolder = i.Is_Dir,
+        icon = i.Icon,
+        size = i.Size,
+        extension = i.Extension,
+        modified = i.Modified,
+        hasThumb = i.Thumb_Exists
+    }));
+                                
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        @Display.Metas()
+        @Display.HeadScripts()
+        @Display.HeadLinks()
+        @Display.StyleSheetLinks()
+    </head>
+    <body>
+        <div id="dropbox-browser">
+            <h1 data-bind="text: formattedPath()"></h1>
+            <ul>
+                <li class="dropbox-item header">
+                    <span class="fileprop name">@T("Name")</span>
+                    <span class="fileprop size">@T("Size")</span>
+                    <span class="fileprop modified">@T("Modified")</span>
+                </li>
+                <li class="dropbox-item" data-bind="visible: formattedPath() != '/'">
+                    <a href="#" class="icon icon-special-parent" data-bind="click: $root.parent">@T("[Parent]")</a>
+                </li>
+                <!-- ko foreach: contents() -->
+                <li class="dropbox-item">
+                    <a href="#" data-bind="click: $root.open, attr: { class: 'icon icon-' + icon }">
+                        <span class="fileprop name" data-bind="text: name"></span>
+                        <span class="fileprop size" data-bind="text: size"></span>
+                        <span class="fileprop modified" data-bind="text: modified"></span>
+                    </a>
+                </li>
+                <!-- /ko -->
+            </ul>
+        </div>
+        <div id="dropbox-properties">
+            <div data-bind="attr: { class: 'thumbnail icon icon-big-' + selected().icon }">
+                
+            </div>
+            <div class="properties" data-bind="visible: selected().name">
+                <span class="property" data-bind="visible: selected().name">
+                    <span class="propname">@T("Name")</span>
+                    <span class="propvalue" data-bind="text: selected().name"></span>
+                </span>
+                <span class="property" data-bind="visible: selected().size">
+                    <span class="propname">@T("Size")</span>
+                    <span class="propvalue" data-bind="text: selected().size"></span>
+                </span>
+                <span class="property" data-bind="visible: selected().modified">
+                    <span class="propname">@T("Last Modified")</span>
+                    <span class="propvalue" data-bind="text: selected().modified"></span>
+                </span>
+                <span class="property">
+                    <a class="button" data-bind="click: $root.upload">@T("Import")</a>
+                    <a class="button" data-bind="visible: selected().hasThumb" id="thumb-preview">@T("Preview")</a>
+                </span>
+            </div>
+            <input type="hidden" name="Id" value="@Model"/>
+            <input type="hidden" name="ThumbUrl" value="@Url.Action("Thumb")"/>
+            <input type="hidden" name="ListUrl" value="@Url.Action("List")"/>
+            <input type="hidden" name="PreviewUrl" value="@Url.Action("Preview")"/>
+            <input type="hidden" name="UploadUrl" value="@Url.Action("Upload")"/>
+            <input type="hidden" name="AntiforgeryToken" value="@Html.AntiForgeryTokenValueOrchard()"/>
+        </div>
+        @using (Script.Foot()) {
+            <script type="text/javascript">
+                var urls = {
+                    "thumb": $('input[name="ThumbUrl"]').val(),
+                    "list": $('input[name="ListUrl"]').val(),
+                    "preview": $('input[name="PreviewUrl"]').val(),
+                    "upload": $('input[name="UploadUrl"]').val()
+                };
+                var antiforgeryToken = $('input[name="AntiforgeryToken"]').val();
+                var id = $('input[name="Id"]').val();
+                $(function () {
+                    function DropboxItem(name, isFolder, icon, size, extension, modified, hasThumb) {
+                        var self = this;
+                        self.name = name;
+                        self.isFolder = isFolder;
+                        self.icon = icon;
+                        self.size = size;
+                        self.extension = extension;
+                        self.modified = modified.substr(0, modified.length - 6);
+                        self.hasThumb = hasThumb;
+                    }
+
+                    function DropboxViewModel() {
+                        var self = this;
+                        self.contents = ko.observableArray([]);
+                        self.path = ko.observableArray([]);
+                        self.selected = ko.observable({});
+                        self.formattedPath = ko.computed(function() {
+                            return '/' + self.path().join("/");
+                        });
+
+                        // List items at path
+                        self.ls = function(path, callback) {
+                            $.getJSON(urls["list"], { path: path },
+                                function(data) {
+                                    callback(data);
+                                });
+                        };
+
+                        // Update list of items
+                        self.update = function(contents) {
+                            var length = self.contents().length;
+                            for (var i = 0; i < length; i++) {
+                                self.contents.pop();
+                            }
+                            self.pushobj(contents);
+                        };
+
+                        // Open an item
+                        self.open = function(item) {
+                            if (item.isFolder) {
+                                self.path.push(item.name);
+                                self.ls(self.formattedPath(), self.update);
+                                self.selected({});
+                            } else {
+                                self.selected(item);
+                            }
+                            
+                            $('#dropbox-properties .thumbnail').css('background-image', '');
+                            // Load thumbnail async
+                            if (item.hasThumb) {
+                                self.thumbnail(item, function(data) {
+                                    $('#dropbox-properties .thumbnail').css('background-image', 'url(data:image/png;base64,' + data.thumb + ')');
+                                });
+                                $('#thumb-preview').attr('href', urls["preview"] + '?path=' + self.formattedPath() + '/' + item.name);
+                                $('#thumb-preview').fancybox();
+                            }
+                        };
+                        
+                        // Open parent folder
+                        self.parent = function() {
+                            self.path.pop();
+                            self.ls(self.formattedPath(), self.update);
+                        };
+                        
+                        // Load array of DropboxItem-esque objects
+                        self.pushobj = function(obj) {
+                            $.map(obj, function(element, index) {
+                                self.contents.push(new DropboxItem(
+                                    element.name,
+                                    element.isFolder,
+                                    element.icon,
+                                    element.size,
+                                    element.extension,
+                                    element.modified,
+                                    element.hasThumb));
+                            });
+                        };
+                        
+                        // Get thumbnail for an item in the current folder
+                        self.thumbnail = function(item, callback) {
+                            var path = self.formattedPath() + '/' + item.name;
+                            $.getJSON(urls['thumb'], { path: path },
+                                function(data) {
+                                    callback(data);
+                                });
+                        };
+                        
+                        // Upload
+                        self.upload = function() {
+                            $.post(urls["upload"], {
+                                id: id,
+                                path: self.formattedPath() + '/' + self.selected().name,
+                                name: self.selected().name,
+                                __RequestVerificationToken: antiforgeryToken
+                            })
+                                .done(function() {
+                                    alert('uploaded');
+                                })
+                                .fail(function() {
+                                    alert('failed');
+                                });
+                        };
+                    }
+
+                    var model = new DropboxViewModel();
+                    ko.applyBindings(model);
+
+                    model.pushobj(@Html.Raw(raw));
+                });
+            </script>
+        }
+        @Display.FootScripts()
+    </body>
+</html>

@@ -1,0 +1,36 @@
+﻿@model Kobowi.Dropbox.ViewModels.DropboxAuthoriseViewModel
+@{
+    Script.Require("jQuery");
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        @Display.Metas()
+        @Display.HeadScripts()
+        @Display.HeadLinks()
+        @Display.StyleSheetLinks()
+    </head>
+    <body>
+        <a class="button" id="authenticate" target="_blank" href="@Model.AuthoriseUrl">@T("Authenticate with Dropbox")</a>
+        
+        @using (Script.Foot()) {
+            <script type="text/javascript">
+                $(function() {
+                    $('#authenticate').click(function(e) {
+                        e.preventDefault();
+                        var w = window.open('@Model.AuthoriseUrl');
+                        var i = window.setInterval(function() {
+                            if (!w.closed) {
+                                return; 
+                            }
+                            window.clearInterval(i);
+                            window.location = '@Model.RedirectUrl';
+                        });
+                        return false;
+                    });
+                });
+            </script>
+        }
+        @Display.FootScripts()
+    </body>
+</html>

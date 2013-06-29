@@ -1,0 +1,11 @@
+﻿.navicon-dropbox:before {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+    content: '\f16b';
+    font-size: 14px;
+    color: black;
+    padding-right: 5px;
+}

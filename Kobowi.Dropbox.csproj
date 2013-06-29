@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4758B02B-CCF1-4588-ADBE-8DCE027FFD67}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kobowi.Dropbox</RootNamespace>
+    <AssemblyName>Kobowi.Dropbox</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DropNet, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\dropnet\DropNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RestSharp">
+      <HintPath>..\..\..\packages\DropNet.1.9.4\lib\net35\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\aspnetmvc\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fancybox\fancybox_loading.gif" />
+    <Content Include="Styles\fancybox\fancybox_overlay.png" />
+    <Content Include="Styles\fancybox\fancybox_sprite.png" />
+    <Content Include="Scripts\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\knockout-2.2.1.js" />
+    <Content Include="Styles\dropbox.storage.css" />
+    <Content Include="Styles\images\arrow_up.png" />
+    <Content Include="Styles\images\dropbox\16x16\folder.gif" />
+    <Content Include="Styles\images\dropbox\16x16\folder_app.gif" />
+    <Content Include="Styles\images\dropbox\16x16\folder_gray.gif" />
+    <Content Include="Styles\images\dropbox\16x16\folder_photos.gif" />
+    <Content Include="Styles\images\dropbox\16x16\folder_public.gif" />
+    <Content Include="Styles\images\dropbox\16x16\folder_star.gif" />
+    <Content Include="Styles\images\dropbox\16x16\folder_user.gif" />
+    <Content Include="Styles\images\dropbox\16x16\package.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_acrobat.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_actionscript.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_c.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_code.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_compressed.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_cplusplus.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_csharp.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_cup.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_dvd.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_excel.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_film.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_flash.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_gear.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_paint.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_php.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_picture.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_powerpoint.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_ruby.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_sound.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_text.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_tux.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_vector.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_visualstudio.gif" />
+    <Content Include="Styles\images\dropbox\16x16\page_white_word.gif" />
+    <Content Include="Styles\images\dropbox\48x48\excel48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\folder48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\folder_app48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\folder_gray48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\folder_photos48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\folder_public48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\folder_star48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\folder_user48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\music48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\package48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_acrobat48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_actionscript48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_c48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_code48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_cplusplus48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_csharp48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_cup48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_dvd48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_flash48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_gear48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_h48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_paint48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_php48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_picture48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_ruby48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_text48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_tux48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_vector48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_visualstudio48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\page_white_zip48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\powerpoint48.gif" />
+    <Content Include="Styles\images\dropbox\48x48\word48.gif" />
+    <Content Include="Styles\menu.dropbox-mediaproviders.css" />
+    <Content Include="Web.config" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Scripts\Web.config" />
+    <Content Include="Styles\Web.config" />
+    <Content Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Module.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
+      <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Orchard.Core.csproj">
+      <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
+      <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.MediaLibrary\Orchard.MediaLibrary.csproj">
+      <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
+      <Name>Orchard.MediaLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Users\Orchard.Users.csproj">
+      <Project>{79AED36E-ABD0-4747-93D3-8722B042454B}</Project>
+      <Name>Orchard.Users</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\DropboxAuthenticationController.cs" />
+    <Compile Include="Controllers\DropboxStorageController.cs" />
+    <Compile Include="Drivers\DropboxSettingsPartDriver.cs" />
+    <Compile Include="Drivers\DropboxUserSettingsPartDriver.cs" />
+    <Compile Include="Handlers\DropboxSettingsPartHandler.cs" />
+    <Compile Include="Handlers\DropboxUserSettingsPartHandler.cs" />
+    <Compile Include="Migrations.cs" />
+    <Compile Include="Models\DropboxSettingsPart.cs" />
+    <Compile Include="Models\DropboxSettingsPartRecord.cs" />
+    <Compile Include="Models\DropboxUserSettingsPart.cs" />
+    <Compile Include="Models\DropboxUserSettingsPartRecord.cs" />
+    <Compile Include="Providers\DropboxSearchMenu.cs" />
+    <Compile Include="Services\DropboxService.cs" />
+    <Compile Include="Services\IDropboxService.cs" />
+    <Compile Include="ViewModels\DropboxAuthoriseViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DropboxAuthentication\Authorise.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts.DropboxSettingsPart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Placement.info" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DropboxAuthentication\AuthCallback.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DropboxStorage\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\images\dropbox\16x16\Thumbs.db" />
+    <Content Include="Styles\images\dropbox\48x48\Thumbs.db" />
+    <Content Include="Styles\images\dropbox\README" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" DependsOnTargets="AfterBuildCompiler">
+    <PropertyGroup>
+      <AreasManifestDir>$(ProjectDir)\..\Manifests</AreasManifestDir>
+    </PropertyGroup>
+    <!-- If this is an area child project, uncomment the following line:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Child" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    -->
+    <!-- If this is an area parent project, uncomment the following lines:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Parent" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    <CopyAreaManifests ManifestPath="$(AreasManifestDir)" CrossCopy="false" RenameViews="true" />
+    -->
+  </Target>
+  <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>45979</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://orchard.codeplex.com</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

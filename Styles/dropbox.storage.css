@@ -1,0 +1,214 @@
+﻿body {
+    font-family: 'Segoe UI', Trebuchet, Arial, sans-serif;
+    font-size: 13px;
+}
+
+#dropbox-browser {
+    
+}
+
+    #dropbox-browser > h1 {
+        font-size: 16px;
+        font-weight: normal;
+    }
+
+    #dropbox-browser > ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+        #dropbox-browser > ul li {
+            width: 100%;
+            clear: both;
+            padding: 3px;
+        }
+
+            #dropbox-browser > ul li > a:hover {
+                background-color: #fafafa;
+            }
+
+            #dropbox-browser > ul li.header {
+                
+            }
+
+                #dropbox-browser > ul li.header span.fileprop {
+                    font-weight: bold;
+                    padding-bottom: 5px;
+                    text-align: center;
+                }
+
+            #dropbox-browser > ul li .fileprop {
+                float: left;
+            }
+
+                #dropbox-browser > ul li .fileprop.name {
+                    width: 350px;
+                    margin-right: 10px;
+                }
+
+                #dropbox-browser > ul li .fileprop.size {
+                    width: 100px;
+                }
+
+                #dropbox-browser > ul li .fileprop.modified {
+                    width: 175px;
+                }
+
+#dropbox-properties {
+    position: fixed;
+    top: 0;right: 0;bottom: 0;
+    width: 220px;height: 100%;
+    overflow: hidden;
+
+    background: #fafafa;
+    color: grey;
+    border-left: 1px solid #e0e0e0;
+}
+
+    #dropbox-properties .thumbnail {
+        width: 64px;height: 64px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        margin: 5px;
+        clear: both;
+    }
+
+    #dropbox-properties .properties {
+        
+    }
+
+        #dropbox-properties .properties .property {
+            display: block;
+            float: left;
+            clear: both;
+            margin: 5px;
+        }
+
+            #dropbox-properties .properties .property .propname {
+                font-weight: bold;
+                margin-right: 6px;
+            }
+
+            #dropbox-properties .properties .property .propvalue {
+
+            }
+
+.dropbox-item .icon {
+    display: block;
+    padding-left: 22px;
+    background-position: left center;
+    background-repeat: no-repeat;
+    margin: 5px;
+    text-decoration: none;
+    min-height: 20px;
+}
+
+.dropbox-item .icon-special-parent { background-image: url(images/arrow_up.png); }
+
+/* Get-ChildItem | Where-Object {$_.Name -like '*.gif'} | % { $name = $_.Name.split('.'); Write-Host ".dropbox-item .icon-$($name[0]) { background-image: url(images/dropbox/48x48/$($name[0]).gif); }" } */
+.dropbox-item .icon-folder { background-image: url(images/dropbox/16x16/folder.gif); }
+.dropbox-item .icon-folder_app { background-image: url(images/dropbox/16x16/folder_app.gif); }
+.dropbox-item .icon-folder_gray { background-image: url(images/dropbox/16x16/folder_gray.gif); }
+.dropbox-item .icon-folder_photos { background-image: url(images/dropbox/16x16/folder_photos.gif); }
+.dropbox-item .icon-folder_public { background-image: url(images/dropbox/16x16/folder_public.gif); }
+.dropbox-item .icon-folder_star { background-image: url(images/dropbox/16x16/folder_star.gif); }
+.dropbox-item .icon-folder_user { background-image: url(images/dropbox/16x16/folder_user.gif); }
+.dropbox-item .icon-package { background-image: url(images/dropbox/16x16/package.gif); }
+.dropbox-item .icon-page_white { background-image: url(images/dropbox/16x16/page_white.gif); }
+.dropbox-item .icon-page_white_acrobat { background-image: url(images/dropbox/16x16/page_white_acrobat.gif); }
+.dropbox-item .icon-page_white_actionscript { background-image: url(images/dropbox/16x16/page_white_actionscript.gif); }
+.dropbox-item .icon-page_white_c { background-image: url(images/dropbox/16x16/page_white_c.gif); }
+.dropbox-item .icon-page_white_code { background-image: url(images/dropbox/16x16/page_white_code.gif); }
+.dropbox-item .icon-page_white_compressed { background-image: url(images/dropbox/16x16/page_white_compressed.gif); }
+.dropbox-item .icon-page_white_cplusplus { background-image: url(images/dropbox/16x16/page_white_cplusplus.gif); }
+.dropbox-item .icon-page_white_csharp { background-image: url(images/dropbox/16x16/page_white_csharp.gif); }
+.dropbox-item .icon-page_white_cup { background-image: url(images/dropbox/16x16/page_white_cup.gif); }
+.dropbox-item .icon-page_white_dvd { background-image: url(images/dropbox/16x16/page_white_dvd.gif); }
+.dropbox-item .icon-page_white_excel { background-image: url(images/dropbox/16x16/page_white_excel.gif); }
+.dropbox-item .icon-page_white_film { background-image: url(images/dropbox/16x16/page_white_film.gif); }
+.dropbox-item .icon-page_white_flash { background-image: url(images/dropbox/16x16/page_white_flash.gif); }
+.dropbox-item .icon-page_white_gear { background-image: url(images/dropbox/16x16/page_white_gear.gif); }
+.dropbox-item .icon-page_white_paint { background-image: url(images/dropbox/16x16/page_white_paint.gif); }
+.dropbox-item .icon-page_white_php { background-image: url(images/dropbox/16x16/page_white_php.gif); }
+.dropbox-item .icon-page_white_picture { background-image: url(images/dropbox/16x16/page_white_picture.gif); }
+.dropbox-item .icon-page_white_powerpoint { background-image: url(images/dropbox/16x16/page_white_powerpoint.gif); }
+.dropbox-item .icon-page_white_ruby { background-image: url(images/dropbox/16x16/page_white_ruby.gif); }
+.dropbox-item .icon-page_white_sound { background-image: url(images/dropbox/16x16/page_white_sound.gif); }
+.dropbox-item .icon-page_white_text { background-image: url(images/dropbox/16x16/page_white_text.gif); }
+.dropbox-item .icon-page_white_tux { background-image: url(images/dropbox/16x16/page_white_tux.gif); }
+.dropbox-item .icon-page_white_vector { background-image: url(images/dropbox/16x16/page_white_vector.gif); }
+.dropbox-item .icon-page_white_visualstudio { background-image: url(images/dropbox/16x16/page_white_visualstudio.gif); }
+.dropbox-item .icon-page_white_word { background-image: url(images/dropbox/16x16/page_white_word.gif); }
+
+.icon-big-excel { background-image: url(images/dropbox/48x48/excel48.gif); }
+.icon-big-folder { background-image: url(images/dropbox/48x48/folder48.gif); }
+.icon-big-folder_app { background-image: url(images/dropbox/48x48/folder_app48.gif); }
+.icon-big-folder_gray { background-image: url(images/dropbox/48x48/folder_gray48.gif); }
+.icon-big-folder_photos { background-image: url(images/dropbox/48x48/folder_photos48.gif); }
+.icon-big-folder_public { background-image: url(images/dropbox/48x48/folder_public48.gif); }
+.icon-big-folder_star { background-image: url(images/dropbox/48x48/folder_star48.gif); }
+.icon-big-folder_user { background-image: url(images/dropbox/48x48/folder_user48.gif); }
+.icon-big-music { background-image: url(images/dropbox/48x48/music48.gif); }
+.icon-big-package { background-image: url(images/dropbox/48x48/package48.gif); }
+.icon-big-page_white { background-image: url(images/dropbox/48x48/page_white48.gif); }
+.icon-big-page_white_acrobat { background-image: url(images/dropbox/48x48/page_white_acrobat48.gif); }
+.icon-big-page_white_actionscript { background-image: url(images/dropbox/48x48/page_white_actionscript48.gif); }
+.icon-big-page_white_c { background-image: url(images/dropbox/48x48/page_white_c48.gif); }
+.icon-big-page_white_code { background-image: url(images/dropbox/48x48/page_white_code48.gif); }
+.icon-big-page_white_cplusplus { background-image: url(images/dropbox/48x48/page_white_cplusplus48.gif); }
+.icon-big-page_white_csharp { background-image: url(images/dropbox/48x48/page_white_csharp48.gif); }
+.icon-big-page_white_cup { background-image: url(images/dropbox/48x48/page_white_cup48.gif); }
+.icon-big-page_white_dvd { background-image: url(images/dropbox/48x48/page_white_dvd48.gif); }
+.icon-big-page_white_flash { background-image: url(images/dropbox/48x48/page_white_flash48.gif); }
+.icon-big-page_white_gear { background-image: url(images/dropbox/48x48/page_white_gear48.gif); }
+.icon-big-page_white_h { background-image: url(images/dropbox/48x48/page_white_h48.gif); }
+.icon-big-page_white_paint { background-image: url(images/dropbox/48x48/page_white_paint48.gif); }
+.icon-big-page_white_php { background-image: url(images/dropbox/48x48/page_white_php48.gif); }
+.icon-big-page_white_picture { background-image: url(images/dropbox/48x48/page_white_picture48.gif); }
+.icon-big-page_white_ruby { background-image: url(images/dropbox/48x48/page_white_ruby48.gif); }
+.icon-big-page_white_text { background-image: url(images/dropbox/48x48/page_white_text48.gif); }
+.icon-big-page_white_tux { background-image: url(images/dropbox/48x48/page_white_tux48.gif); }
+.icon-big-page_white_vector { background-image: url(images/dropbox/48x48/page_white_vector48.gif); }
+.icon-big-page_white_visualstudio { background-image: url(images/dropbox/48x48/page_white_visualstudio48.gif); }
+.icon-big-page_white_zip { background-image: url(images/dropbox/48x48/page_white_zip48.gif); }
+.icon-big-powerpoint { background-image: url(images/dropbox/48x48/powerpoint48.gif); }
+.icon-big-word { background-image: url(images/dropbox/48x48/word48.gif); }
+
+/* Stolen from TheAdmin... */
+button, .button, a.button {
+    background: #6a7b42;
+    border: 1px solid #487328;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font: 12px Arial,Helvetica,sans-serif;
+    padding: 5px 14px 5px 14px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: rgba(40,53,9,.2) 0px 0px 1px;
+    -webkit-box-shadow: inset 0px 0px 1px rgba(255, 255, 255, 1.0), 1px 1px 1px rgba(102, 102, 102, 0.2);
+    -moz-box-shadow: inset 0px 0px 1px rgba(255, 255, 255, 1.0), 1px 1px 1px rgba(102, 102, 102, 0.2);
+    box-shadow: inset 0px 0px 1px rgba(255, 255, 255, 1.0), 1px 1px 1px rgba(102, 102, 102, 0.2);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, startColorstr='#ff9bb36c', endColorstr='#ff809f43');
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(155, 179, 108, 1.0)), to(rgba(128, 159, 67, 1.0)));
+    background: -moz-linear-gradient(top, rgba(155, 179, 108, 1.0), rgba(128, 159, 67, 1.0));
+    background: -moz-linear-gradient(top, rgba(155, 179, 108, 1.0), rgba(133, 154, 93, 1.0));
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.message-Information, .notifications {
+    background:#e6f1c9; /* green */
+    border:1px solid #cfe493;
+    color:#062232;
+}
+.message-Warning {
+    background:#fdf5bc; /* yellow */
+    border:1px solid #ffea9b;
+}
+.message-Error {
+    background: #e68585; /* red */
+    border: 1px solid #990808;
+    color: #fff;
+}
