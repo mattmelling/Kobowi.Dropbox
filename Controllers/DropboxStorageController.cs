@@ -57,21 +57,11 @@ namespace Kobowi.Dropbox.Controllers {
         }
 
         public ActionResult Thumb(string path) {
-            var client = _dropbox.GetClient(_orchard.WorkContext.CurrentUser);
-            if (client == null)
-                return new HttpUnauthorizedResult();
-            var thumb = client.GetThumbnail(path, ThumbnailSize.Medium);
-            return Json(new {
-                thumb = Convert.ToBase64String(thumb)
-            }, JsonRequestBehavior.AllowGet);
+            return File(GetThumbnail(path, ThumbnailSize.ExtraLarge), "image/jpeg");
         }
 
         public ActionResult Preview(string path) {
-            var client = _dropbox.GetClient(_orchard.WorkContext.CurrentUser);
-            if (client == null)
-                return new HttpUnauthorizedResult();
-            var thumb = client.GetThumbnail(path, ThumbnailSize.ExtraLarge);
-            return File(thumb, "image/png");
+            return File(GetThumbnail(path, ThumbnailSize.ExtraLarge), "image/jpeg");
         }
 
         [HttpPost]
@@ -85,5 +75,16 @@ namespace Kobowi.Dropbox.Controllers {
                 status = "ok"
             });
         }
+
+        #region Private stuff
+
+        private byte[] GetThumbnail(string path, ThumbnailSize size) {
+            var client = _dropbox.GetClient(_orchard.WorkContext.CurrentUser);
+            if (client == null)
+                return null;
+            return client.GetThumbnail(path, size);
+        }
+
+        #endregion
     }
 }

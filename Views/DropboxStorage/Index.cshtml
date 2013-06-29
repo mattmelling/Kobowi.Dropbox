@@ -31,30 +31,26 @@
         <div id="dropbox-browser">
             <h1 data-bind="text: formattedPath()"></h1>
             <ul>
-                <li class="dropbox-item header">
-                    <span class="fileprop name">@T("Name")</span>
-                    <span class="fileprop size">@T("Size")</span>
-                    <span class="fileprop modified">@T("Modified")</span>
-                </li>
-                <li class="dropbox-item" data-bind="visible: formattedPath() != '/'">
-                    <a href="#" class="icon icon-special-parent" data-bind="click: $root.parent">@T("[Parent]")</a>
+                <li data-bind="visible: formattedPath() != '/', click: $root.parent" class="nav-parent">
+                    <div class="overlay">
+                        <p class="filename">@T("Parent Directory")</p>
+                    </div>
                 </li>
                 <!-- ko foreach: contents() -->
-                <li class="dropbox-item">
-                    <a href="#" data-bind="click: $root.open, attr: { class: 'icon icon-' + icon }">
-                        <span class="fileprop name" data-bind="text: name"></span>
-                        <span class="fileprop size" data-bind="text: size"></span>
-                        <span class="fileprop modified" data-bind="text: modified"></span>
-                    </a>
+                <li data-bind="click: $root.open, style: { backgroundImage: 'url(' + thumbnailUrl() + ')' }, css: hasThumb ? 'wallpaper' : 'nowallpaper'">
+                    <div class="overlay">
+                        <p class="filename" data-bind="text: name"></p>
+                    </div>
                 </li>
                 <!-- /ko -->
             </ul>
         </div>
         <div id="dropbox-properties">
-            <div data-bind="attr: { class: 'thumbnail icon icon-big-' + selected().icon }">
-                
-            </div>
             <div class="properties" data-bind="visible: selected().name">
+                <p>@T("PROPERTIES")</p>
+                <div class="thumbnail" data-bind="visible: selected().name, style: { backgroundImage: selected().name ? 'url(' + selected().thumbnailUrl() + ')' : 'none' }">
+                
+                </div>
                 <span class="property" data-bind="visible: selected().name">
                     <span class="propname">@T("Name")</span>
                     <span class="propvalue" data-bind="text: selected().name"></span>
@@ -77,6 +73,7 @@
             <input type="hidden" name="ListUrl" value="@Url.Action("List")"/>
             <input type="hidden" name="PreviewUrl" value="@Url.Action("Preview")"/>
             <input type="hidden" name="UploadUrl" value="@Url.Action("Upload")"/>
+            <input type="hidden" name="StyleUrl" value="@(String.Format("{0}/Modules/Kobowi.Dropbox/Styles", WorkContext.CurrentSite.BaseUrl))"/>
             <input type="hidden" name="AntiforgeryToken" value="@Html.AntiForgeryTokenValueOrchard()"/>
         </div>
         @using (Script.Foot()) {
@@ -85,13 +82,15 @@
                     "thumb": $('input[name="ThumbUrl"]').val(),
                     "list": $('input[name="ListUrl"]').val(),
                     "preview": $('input[name="PreviewUrl"]').val(),
-                    "upload": $('input[name="UploadUrl"]').val()
+                    "upload": $('input[name="UploadUrl"]').val(),
+                    "style": $('input[name="StyleUrl"]').val()
                 };
                 var antiforgeryToken = $('input[name="AntiforgeryToken"]').val();
                 var id = $('input[name="Id"]').val();
                 $(function () {
-                    function DropboxItem(name, isFolder, icon, size, extension, modified, hasThumb) {
+                    function DropboxItem(path, name, isFolder, icon, size, extension, modified, hasThumb) {
                         var self = this;
+                        self.path = path;
                         self.name = name;
                         self.isFolder = isFolder;
                         self.icon = icon;
@@ -99,6 +98,19 @@
                         self.extension = extension;
                         self.modified = modified.substr(0, modified.length - 6);
                         self.hasThumb = hasThumb;
+                        self.thumbnailUrl = ko.computed(function() {
+                            if (self.hasThumb) {
+                                return urls['thumb'] + '?path=' + self.path + '/' + self.name;
+                            } else {
+                                return urls['style'] + '/images/dropbox/48x48/' + self.icon + '48.gif';
+                            }
+                        });
+                        self.previewUrl = function() {
+                            if (self.hasThumb) {
+                                return urls['preview'] + '?path=' + self.path + '/' + self.name;
+                            }
+                            return null;
+                        };
                     }
 
                     function DropboxViewModel() {
@@ -124,7 +136,7 @@
                             for (var i = 0; i < length; i++) {
                                 self.contents.pop();
                             }
-                            self.pushobj(contents);
+                            self.pushobj(self.formattedPath(), contents);
                         };
 
                         // Open an item
@@ -137,12 +149,9 @@
                                 self.selected(item);
                             }
                             
+                            // Set up fancybox for our thumbnail
                             $('#dropbox-properties .thumbnail').css('background-image', '');
-                            // Load thumbnail async
                             if (item.hasThumb) {
-                                self.thumbnail(item, function(data) {
-                                    $('#dropbox-properties .thumbnail').css('background-image', 'url(data:image/png;base64,' + data.thumb + ')');
-                                });
                                 $('#thumb-preview').attr('href', urls["preview"] + '?path=' + self.formattedPath() + '/' + item.name);
                                 $('#thumb-preview').fancybox();
                             }
@@ -155,9 +164,10 @@
                         };
                         
                         // Load array of DropboxItem-esque objects
-                        self.pushobj = function(obj) {
+                        self.pushobj = function(path, obj) {
                             $.map(obj, function(element, index) {
                                 self.contents.push(new DropboxItem(
+                                    path,
                                     element.name,
                                     element.isFolder,
                                     element.icon,
@@ -197,7 +207,7 @@
                     var model = new DropboxViewModel();
                     ko.applyBindings(model);
 
-                    model.pushobj(@Html.Raw(raw));
+                    model.pushobj('/', @Html.Raw(raw));
                 });
             </script>
         }
