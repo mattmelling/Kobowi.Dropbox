@@ -65,6 +65,19 @@
                 margin: 3px;
             }
 
+    #dropbox-browser > h1 {
+        margin-left: 25px;
+    }
+
+    #dropbox-browser > h1 > span a {
+        color: #1e5d7d;
+        text-decoration: none;
+    }
+
+    #dropbox-browser > h1 > span > span:before {
+        content: ' > ';
+    }
+
 #dropbox-properties {
     position: absolute;
     top: 0;

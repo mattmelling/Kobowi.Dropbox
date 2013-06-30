@@ -18,7 +18,12 @@
     </head>
     <body>
         <div id="dropbox-browser">
-            <h1 data-bind="text: formattedPath()"></h1>
+            <h1>
+                <span>
+                    <a href="#" data-bind="click: $root.home">@T("Dropbox")</a>
+                </span>
+                <span data-bind="pathTree: path()"></span>
+            </h1>
             <ul>
                 <li data-bind="visible: formattedPath() != '/', click: $root.parent" class="nav-parent">
                     <div class="overlay">
@@ -67,6 +72,7 @@
         </div>
         @using (Script.Foot()) {
             <script type="text/javascript">
+                
                 var urls = {
                     "thumb": $('input[name="ThumbUrl"]').val(),
                     "list": $('input[name="ListUrl"]').val(),
@@ -74,9 +80,34 @@
                     "upload": $('input[name="UploadUrl"]').val(),
                     "style": $('input[name="StyleUrl"]').val()
                 };
+                
                 var antiforgeryToken = $('input[name="AntiforgeryToken"]').val();
                 var id = $('input[name="Id"]').val();
+
                 $(function () {
+                    
+                    // Binding for "Dropbox > Folder > Folder" navigation
+                    ko.bindingHandlers.pathTree = {
+                        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) { },
+                        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                            var path = valueAccessor();
+                            $(element).html('');
+                            for (var i = 0; i < path.length; i++) {
+                                (function(j) {
+                                    var parent = $('<span></span>').appendTo(element);
+                                    $('<a href="#">' + path[i] + '</a>')
+                                        .appendTo(parent)
+                                        .click(function(e) {
+                                            e.preventDefault();
+                                            var p = path.slice(0, j + 1);
+                                            viewModel.ls('/' + p.join('/'), viewModel.update);
+                                            viewModel.path(p);
+                                        });
+                                })(i);
+                            }
+                        }
+                    };
+
                     function DropboxItem(path, name, isFolder, icon, size, extension, modified, hasThumb) {
                         var self = this;
                         self.path = path;
@@ -190,6 +221,12 @@
                                 .fail(function() {
                                     alert('failed');
                                 });
+                        };
+                        
+                        // Go home
+                        self.home = function() {
+                            self.ls('/', self.update);
+                            self.path([]);
                         };
                     }
 
