@@ -122,6 +122,11 @@
 
             }
 
+.message {
+    margin: 5px;
+    padding: 3px;
+}
+
 /* Stolen from TheAdmin.... */
 .message-Information, .notifications {
     background:#e6f1c9; /* green */
