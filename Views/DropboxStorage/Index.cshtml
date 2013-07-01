@@ -25,14 +25,17 @@
                 <span data-bind="pathTree: path()"></span>
             </h1>
             <div data-bind="css: messageClass() + ' message', visible: message().length > 0, text: message"></div>
-            <ul>
+            <div class="loading" data-bind="visible: loading()">
+                    
+            </div>
+            <ul data-bind="visible: !loading()">
                 <li data-bind="visible: formattedPath() != '/', click: $root.parent" class="nav-parent">
                     <div class="overlay">
                         <p class="filename">@T("Parent Directory")</p>
                     </div>
                 </li>
                 <!-- ko foreach: contents() -->
-                <li data-bind="click: $root.open, style: { backgroundImage: 'url(' + thumbnailUrl() + ')' }, css: hasThumb ? 'wallpaper' : 'nowallpaper'">
+                <li data-bind="click: $root.open, style: { backgroundImage: 'url(' + thumbnailUrl() + ')' }, css: (hasThumb ? 'wallpaper' : 'nowallpaper') + ' ' + ($data == $root.selected() ? 'selected' : '')">
                     <div class="overlay">
                         <p class="filename" data-bind="text: name"></p>
                     </div>
@@ -144,12 +147,15 @@
                         });
                         self.message = ko.observable("");
                         self.messageClass = ko.observable("");
+                        self.loading = ko.observable(true);
 
                         // List items at path
                         self.ls = function(path, callback) {
+                            self.loading(true);
                             $.getJSON(urls["list"], { path: path },
                                 function(data) {
                                     callback(data);
+                                    self.loading(false);
                                 });
                         };
 
@@ -239,6 +245,7 @@
                     ko.applyBindings(model);
 
                     model.pushobj('/', @Html.Raw(Json.Encode(Model.Contents)));
+                    model.loading(false);
                 });
             </script>
         }
