@@ -35,7 +35,7 @@
                     </div>
                 </li>
                 <!-- ko foreach: contents() -->
-                <li data-bind="click: $root.open, style: { backgroundImage: 'url(' + thumbnailUrl() + ')' }, css: (hasThumb ? 'wallpaper' : 'nowallpaper') + ' ' + ($data == $root.selected() ? 'selected' : '')">
+                <li data-bind="click: $root.open, style: { backgroundImage: 'url(' + thumbnailUrl() + ')' }, css: (hasThumb ? 'wallpaper' : 'nowallpaper') + ' ' + (selected() ? 'selected' : '')">
                     <div class="overlay">
                         <p class="filename" data-bind="text: name"></p>
                     </div>
@@ -66,7 +66,18 @@
                     <a class="button" data-bind="visible: selected().hasThumb" id="thumb-preview">@T("Preview")</a>
                 </span>
             </div>
-            <input type="hidden" name="Id" value="@Model.Id"/>
+            <div class="properties">
+                <span data-bind="visible: selection().length > 1">
+                    <p>
+                        @T("SELECTION") (<span data-bind="text: selection().length"></span>)
+                    </p>
+                    <button data-bind="click: clearSelection">@T("Clear")</button>
+                    <ul class="selection-preview" data-bind="foreach: selection()">
+                        <li data-bind="text: name"></li>
+                    </ul>
+                </span>
+            </div>
+            <input type="hidden" name="FolderPath" value="@Model.FolderPath"/>
             <input type="hidden" name="ThumbUrl" value="@Url.Action("Thumb")"/>
             <input type="hidden" name="ListUrl" value="@Url.Action("List")"/>
             <input type="hidden" name="PreviewUrl" value="@Url.Action("Preview")"/>
@@ -86,7 +97,7 @@
                 };
                 
                 var antiforgeryToken = $('input[name="AntiforgeryToken"]').val();
-                var id = $('input[name="Id"]').val();
+                var folderPath = $('input[name="FolderPath"]').val();
 
                 $(function () {
                     
@@ -135,6 +146,7 @@
                             }
                             return null;
                         };
+                        self.selected = ko.observable(false);
                     }
 
                     function DropboxViewModel() {
@@ -148,6 +160,11 @@
                         self.message = ko.observable("");
                         self.messageClass = ko.observable("");
                         self.loading = ko.observable(true);
+                        self.selection = ko.computed(function() {
+                            return $.grep(self.contents(), function(n, i) {
+                                return n.selected();
+                            });
+                        });
 
                         // List items at path
                         self.ls = function(path, callback) {
@@ -169,13 +186,32 @@
                         };
 
                         // Open an item
-                        self.open = function(item) {
+                        self.open = function(item, e) {
                             if (item.isFolder) {
                                 self.path.push(item.name);
                                 self.ls(self.formattedPath(), self.update);
+                                if (self.selected()) {
+                                    self.selected().selected(false);
+                                }
                                 self.selected({});
                             } else {
-                                self.selected(item);
+                                if (e.ctrlKey) {
+                                    if (item.selected()) {
+                                        item.selected(false);
+                                    } else {
+                                        item.selected(true);
+                                        self.selected(item);
+                                    }
+                                } else {
+                                    $.map(self.contents(), function(n, i) {
+                                        n.selected(false);
+                                    });
+                                    if (self.selected().selected) {
+                                        self.selected().selected(false);
+                                    }
+                                    self.selected(item);
+                                    item.selected(true);
+                                }
                             }
                             
                             // Set up fancybox for our thumbnail
@@ -219,7 +255,7 @@
                         // Upload
                         self.upload = function() {
                             $.post(urls["upload"], {
-                                id: id,
+                                folderPath: folderPath,
                                 path: self.formattedPath() + '/' + self.selected().name,
                                 name: self.selected().name,
                                 __RequestVerificationToken: antiforgeryToken
@@ -238,6 +274,14 @@
                         self.home = function() {
                             self.ls('/', self.update);
                             self.path([]);
+                        };
+                        
+                        // Clear multiple selection
+                        self.clearSelection = function() {
+                            $.map(self.selection(), function(n, i) {
+                                n.selected(false);
+                            });
+                            self.selected({});
                         };
                     }
 

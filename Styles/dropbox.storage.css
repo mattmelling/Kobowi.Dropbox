@@ -113,7 +113,10 @@
     }
 
     #dropbox-properties .properties {
-        
+        display: block;
+        clear: both;
+        float: left;
+        margin-bottom: 10px;
     }
 
         #dropbox-properties .properties .property {
@@ -133,6 +136,15 @@
             #dropbox-properties .properties .property .propvalue {
 
             }
+
+            #dropbox-properties .properties ul.selection-preview {
+                list-style-type: none;
+                padding: 0;
+            }
+
+                #dropbox-properties .properties ul.selection-preview li {
+                    padding-left: 0;
+                }
 
 .message {
     margin: 5px;

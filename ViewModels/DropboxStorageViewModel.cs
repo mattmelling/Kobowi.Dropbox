@@ -1,6 +1,6 @@
 ﻿namespace Kobowi.Dropbox.ViewModels {
     public class DropboxStorageViewModel {
-        public int Id { get; set; }
+        public string FolderPath { get; set; }
         public dynamic Contents { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace Kobowi.Dropbox.Controllers {
             Logger = NullLogger.Instance;
         }
 
-        public ActionResult Index(int id) {
+        public ActionResult Index(string folderPath) {
             // Check for existence of api keys
             var siteSettings = _orchard.WorkContext.CurrentSite.As<DropboxSettingsPart>();
             if (string.IsNullOrEmpty(siteSettings.ApiKey) || string.IsNullOrEmpty(siteSettings.ApiSecret))
@@ -39,15 +39,14 @@ namespace Kobowi.Dropbox.Controllers {
             if (string.IsNullOrEmpty(userSettings.UserToken) || string.IsNullOrEmpty(userSettings.UserSecret))
                 return RedirectToAction("Authorise", "DropboxAuthentication",
                                         new {
-                                            redirectUrl = Url.Action("Index",
-                                                                     new {id = id})
+                                            redirectUrl = Url.Action("Index", new {folderPath})
                                         });
 
             try {
                 var client = _dropbox.GetClient(_orchard.WorkContext.CurrentUser);
                 var contents = client.GetMetaData("").Contents.ToClientViewModel();
                 return View(new DropboxStorageViewModel {
-                    Id = id,
+                    FolderPath = folderPath,
                     Contents = contents
                 });
             }
@@ -80,14 +79,14 @@ namespace Kobowi.Dropbox.Controllers {
         }
 
         [HttpPost]
-        public ActionResult Upload(int id, string path, string name) {
+        public ActionResult Upload(string folderPath, string path, string name) {
             var client = _dropbox.GetClient(_orchard.WorkContext.CurrentUser);
             if (client == null)
                 return new HttpUnauthorizedResult();
 
             try {
                 var file = client.GetFile(path);
-                _media.ImportStream(id, new MemoryStream(file), name);
+                _media.ImportMedia(new MemoryStream(file), folderPath, name);
                 return Json(new { status = "ok" });
             }
             catch (DropboxException dbe) {
