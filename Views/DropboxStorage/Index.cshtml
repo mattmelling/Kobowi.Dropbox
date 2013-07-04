@@ -35,7 +35,7 @@
                     </div>
                 </li>
                 <!-- ko foreach: contents() -->
-                <li data-bind="click: $root.open, style: { backgroundImage: 'url(' + thumbnailUrl() + ')' }, css: (hasThumb ? 'wallpaper' : 'nowallpaper') + ' ' + (selected() ? 'selected' : '')">
+                <li data-bind="click: $root.open, style: { backgroundImage: 'url(\'' + thumbnailUrl() + '\')' }, css: (hasThumb ? 'wallpaper' : 'nowallpaper') + ' ' + (selected() ? 'selected' : '')">
                     <div class="overlay">
                         <p class="filename" data-bind="text: name"></p>
                     </div>
@@ -46,7 +46,7 @@
         <div id="dropbox-properties">
             <div class="properties" data-bind="visible: selected().name">
                 <p>@T("PROPERTIES")</p>
-                <div class="thumbnail" data-bind="visible: selected().name, style: { backgroundImage: selected().name ? 'url(' + selected().thumbnailUrl() + ')' : 'none' }">
+                <div class="thumbnail" data-bind="visible: selected().name, style: { backgroundImage: selected().name ? 'url(\'' + selected().thumbnailUrl() + '\')' : 'none' }">
                 
                 </div>
                 <span class="property" data-bind="visible: selected().name">
@@ -190,7 +190,7 @@
                             if (item.isFolder) {
                                 self.path.push(item.name);
                                 self.ls(self.formattedPath(), self.update);
-                                if (self.selected()) {
+                                if (self.selected().selected) {
                                     self.selected().selected(false);
                                 }
                                 self.selected({});
