@@ -36,6 +36,12 @@
                 </li>
                 <!-- ko foreach: contents() -->
                 <li data-bind="click: $root.open, style: { backgroundImage: 'url(\'' + thumbnailUrl() + '\')' }, css: (hasThumb ? 'wallpaper' : 'nowallpaper') + ' ' + (selected() ? 'selected' : '')">
+                    <div class="item-loading-overlay" data-bind="visible: isProcessing()">
+                        
+                    </div>
+                    <div class="item-loading" data-bind="visible: isProcessing()">
+                        
+                    </div>
                     <div class="overlay">
                         <p class="filename" data-bind="text: name"></p>
                     </div>
@@ -133,6 +139,7 @@
                         self.extension = extension;
                         self.modified = modified.substr(0, modified.length - 6);
                         self.hasThumb = hasThumb;
+                        self.isProcessing = ko.observable(false);
                         self.thumbnailUrl = ko.computed(function() {
                             if (self.hasThumb) {
                                 return urls['thumb'] + '?path=' + self.path + '/' + self.name;
@@ -187,6 +194,7 @@
 
                         // Open an item
                         self.open = function(item, e) {
+                            self.message('');
                             if (item.isFolder) {
                                 self.path.push(item.name);
                                 self.ls(self.formattedPath(), self.update);
@@ -213,7 +221,7 @@
                                     item.selected(true);
                                 }
                             }
-                            
+
                             // Set up fancybox for our thumbnail
                             $('#dropbox-properties .thumbnail').css('background-image', '');
                             if (item.hasThumb) {
@@ -254,20 +262,34 @@
                         
                         // Upload
                         self.upload = function() {
-                            $.post(urls["upload"], {
-                                folderPath: folderPath,
-                                path: self.formattedPath() + '/' + self.selected().name,
-                                name: self.selected().name,
-                                __RequestVerificationToken: antiforgeryToken
-                            })
-                            .done(function() {
-                                self.message('File imported successully');
-                                self.messageClass('message-Information');
-                            })
-                            .fail(function() {
-                                self.message('Failed to upload file');
-                                self.messageClass('message-Error');
-                            });
+                            var total = self.selection().length;
+                            var currentTotal = 0;
+                            for (var i = 0; i < self.selection().length; i++) {
+                                (function(item) {
+                                    item.isProcessing(true);
+                                    $.post(urls["upload"], {
+                                        folderPath: folderPath,
+                                        path: self.formattedPath() + '/' + item.name,
+                                        name: item.name,
+                                        __RequestVerificationToken: antiforgeryToken
+                                    })
+                                    .done(function() {
+                                        currentTotal++;
+                                        if (total > 1 && currentTotal < total) {
+                                            self.message(item.name + ' @T("imported successfully") (' + currentTotal + '/' + total + ')');
+                                        } else {
+                                            self.message(total + ' @T("items imported")');
+                                        }
+                                        self.messageClass('message-Information');
+                                    })
+                                    .fail(function() {
+                                        self.message('@T("Failed to upload") ' + item.name);
+                                        self.messageClass('message-Error');
+                                    }).always(function() {
+                                        item.isProcessing(false);
+                                    });
+                                })(self.selection()[i]);
+                            }
                         };
                         
                         // Go home

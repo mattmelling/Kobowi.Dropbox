@@ -78,6 +78,7 @@
     <Content Include="Scripts\jquery.fancybox.pack.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
     <Content Include="Styles\dropbox.storage.css" />
+    <Content Include="Styles\images\ajax-loader.gif" />
     <Content Include="Styles\images\arrow_up.png" />
     <Content Include="Styles\images\dropbox\16x16\folder.gif" />
     <Content Include="Styles\images\dropbox\16x16\folder_app.gif" />
@@ -145,6 +146,7 @@
     <Content Include="Styles\images\dropbox\48x48\page_white_zip48.gif" />
     <Content Include="Styles\images\dropbox\48x48\powerpoint48.gif" />
     <Content Include="Styles\images\dropbox\48x48\word48.gif" />
+    <Content Include="Styles\images\folders-loader.gif" />
     <Content Include="Styles\images\processing.gif" />
     <Content Include="Styles\menu.dropbox-mediaproviders.css" />
     <Content Include="Web.config" />
