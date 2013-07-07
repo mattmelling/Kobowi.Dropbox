@@ -175,9 +175,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="ClientCachedFileResult.cs" />
     <Compile Include="Controllers\DropboxAuthenticationController.cs" />
     <Compile Include="Controllers\DropboxStorageController.cs" />
     <Compile Include="Drivers\DropboxSettingsPartDriver.cs" />

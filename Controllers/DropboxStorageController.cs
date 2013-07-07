@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Web.Mvc;
 using DropNet.Exceptions;
 using DropNet.Models;
@@ -113,7 +114,9 @@ namespace Kobowi.Dropbox.Controllers {
 
             try {
                 var thumbnail = client.GetThumbnail(path, size);
-                return File(thumbnail, ImageFileTypeFromPath(path));
+                // Get client to cache for an hour
+                return new ClientCachedFileResult(_orchard.WorkContext, new TimeSpan(1, 0, 0),
+                                                  thumbnail, ImageFileTypeFromPath(path));
             }
             catch (DropboxException dbe) {
                 Logger.Error(dbe, "{0}, {1}", dbe.StatusCode, dbe.Response.ErrorMessage);
