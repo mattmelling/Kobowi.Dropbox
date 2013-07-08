@@ -160,7 +160,14 @@
             }
 
                 #dropbox-properties .properties ul.selection-preview li {
-                    padding-left: 0;
+                    padding-left: 0;display: inline-block;
+                    width: 60px;height: 60px;
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    -moz-background-size: cover;
+                    -o-background-size: cover;
+                    -webkit-background-size: cover;
+                    background-size: cover;
                 }
 
 .message {

@@ -67,20 +67,18 @@
                     <span class="propname">@T("Last Modified")</span>
                     <span class="propvalue" data-bind="text: selected().modified"></span>
                 </span>
-                <span class="property">
-                    <a class="button" data-bind="click: $root.upload">@T("Import")</a>
-                    <a class="button" data-bind="visible: selected().hasThumb" id="thumb-preview">@T("Preview")</a>
-                </span>
             </div>
             <div class="properties">
-                <span data-bind="visible: selection().length > 1">
+                <span data-bind="visible: selection().length">
                     <p>
                         @T("SELECTION") (<span data-bind="text: selection().length"></span>)
                     </p>
-                    <button data-bind="click: clearSelection">@T("Clear")</button>
+                    <a class="button" data-bind="click: $root.upload">@T("Import")</a>
+                    <a class="button" data-bind="visible: selected().hasThumb, click: preview" id="thumb-preview">@T("Preview")</a>
                     <ul class="selection-preview" data-bind="foreach: selection()">
-                        <li data-bind="text: name"></li>
+                        <li data-bind="style: { backgroundImage: 'url(\'' + thumbnailUrl() + '\')' }"></li>
                     </ul>
+                    <a class="button" data-bind="click: clearSelection">@T("Clear")</a>
                 </span>
             </div>
             <input type="hidden" name="FolderPath" value="@Model.FolderPath"/>
@@ -221,13 +219,6 @@
                                     item.selected(true);
                                 }
                             }
-
-                            // Set up fancybox for our thumbnail
-                            $('#dropbox-properties .thumbnail').css('background-image', '');
-                            if (item.hasThumb) {
-                                $('#thumb-preview').attr('href', urls["preview"] + '?path=' + self.formattedPath() + '/' + item.name);
-                                $('#thumb-preview').fancybox();
-                            }
                         };
                         
                         // Open parent folder
@@ -239,6 +230,10 @@
                         // Load array of DropboxItem-esque objects
                         self.pushobj = function(path, obj) {
                             $.map(obj, function(element, index) {
+                                if (element.icon == 'page_white_excel' 
+                                    || element.icon == 'page_white_word') {
+                                    element.icon = 'page_white_text';
+                                }
                                 self.contents.push(new DropboxItem(
                                     path,
                                     element.name,
@@ -304,6 +299,16 @@
                                 n.selected(false);
                             });
                             self.selected({});
+                        };
+
+                        self.preview = function() {
+                            var selectedWithThumbs = $.grep(self.selection(), function(item, index) {
+                                return item.hasThumb;
+                            });
+                            var previews = $.map(selectedWithThumbs, function(item, index) {
+                                return { href: urls["preview"] + '?path=' + self.formattedPath() + '/' + item.name, title: item.name };
+                            });
+                            $.fancybox.open(previews);
                         };
                     }
 
