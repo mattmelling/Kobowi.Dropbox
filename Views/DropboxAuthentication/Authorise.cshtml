@@ -12,6 +12,9 @@
         @Display.StyleSheetLinks()
     </head>
     <body>
+        <p>
+            @T("To continue, you must associate your login with a Dropbox account. Click the button below to authenticate with Dropbox.")
+        </p>
         <a class="button" id="authenticate" href="@Model.AuthoriseUrl">@T("Log in to Dropbox")</a>
         
         @using (Script.Foot()) {

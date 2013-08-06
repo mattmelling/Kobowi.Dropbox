@@ -178,7 +178,6 @@
     <Compile Include="ClientCachedFileResult.cs" />
     <Compile Include="Controllers\DropboxAuthenticationController.cs" />
     <Compile Include="Controllers\DropboxStorageController.cs" />
-    <Compile Include="Drivers\DropboxSettingsPartDriver.cs" />
     <Compile Include="Drivers\DropboxUserSettingsPartDriver.cs" />
     <Compile Include="Extensions\DropnetExtensions.cs" />
     <Compile Include="Handlers\DropboxSettingsPartHandler.cs" />
@@ -210,8 +209,6 @@
     <Content Include="Views\DropboxStorage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Styles\images\dropbox\16x16\Thumbs.db" />
-    <Content Include="Styles\images\dropbox\48x48\Thumbs.db" />
     <Content Include="Styles\images\dropbox\README" />
   </ItemGroup>
   <ItemGroup>

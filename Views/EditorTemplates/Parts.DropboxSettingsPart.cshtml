@@ -1,10 +1,10 @@
 ﻿@model Kobowi.Dropbox.Models.DropboxSettingsPart
 <fieldset>
-    <legend>@T("Dropbox Settings")</legend>
+    <legend>@T("Dropbox")</legend>
     @Html.LabelFor(m => m.ApiKey, T("API Key"))
-    @Html.EditorFor(m => m.ApiKey, new { @class = "text" })
+    @Html.TextBoxFor(m => m.ApiKey, new { @class = "textMedium" })
     <br/>
     @Html.LabelFor(m => m.ApiSecret, T("API Secret"))
-    @Html.EditorFor(m => m.ApiSecret, new { @class = "text" })
+    @Html.TextBoxFor(m => m.ApiSecret, new { @class = "textMedium" })
     <span class="hint">@T("Get your API key <a href=\"{0}\">here</a>", "https://www.dropbox.com/developers/apply?cont=/developers/apps")</span>
 </fieldset>
