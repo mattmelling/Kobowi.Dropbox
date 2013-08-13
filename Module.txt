@@ -2,7 +2,7 @@
 AntiForgery: enabled
 Author: Matt Melling
 Website: http://www.kobowi.co.uk
-Version: 1.0
+Version: 1.1
 OrchardVersion: 1.7
 Description: Description for the module
 Features:
